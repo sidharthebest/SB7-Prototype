@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SB7 - Product Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation (same as other pages) -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-serif font-bold">SB7</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="index.html" class="text-gray-700 hover:text-black px-3 py-2">Home</a>
+                    <a href="/collections.html" class="text-gray-700 hover:text-black px-3 py-2">Collections</a>
+                    <div class="flex items-center space-x-4">
+                        <a href="/login.html" class="text-gray-700 hover:text-black">
+                            <i class="fas fa-user"></i>
+                            <span class="ml-1">Login</span>
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-black">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="ml-1">Cart</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Detail Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Product Images -->
+            <div class="space-y-4">
+                <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden">
+                    <img id="main-image" src="" alt="" class="w-full h-full object-center object-cover">
+                </div>
+                <div class="grid grid-cols-4 gap-4" id="thumbnail-container">
+                    <!-- Thumbnail images will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="space-y-6">
+                <h1 id="product-name" class="text-3xl font-serif font-bold"></h1>
+                <p id="product-price" class="text-2xl font-bold"></p>
+                
+                <!-- Size Selection -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-900">Size</h3>
+                    <div class="mt-2" id="size-options">
+                        <!-- Size options will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-900">Description</h3>
+                    <div class="mt-2">
+                        <p id="product-description" class="text-gray-600"></p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex space-x-4">
+                    <button onclick="handleWishlistClick(event)" 
+                            class="flex-1 bg-white border border-gray-300 rounded-md py-3 px-8 text-base font-medium text-gray-700 hover:bg-gray-50">
+                        <i class="fas fa-heart"></i> Add to Wishlist
+                    </button>
+                    <button onclick="addToCart()" 
+                            class="flex-1 bg-black border border-transparent rounded-md py-3 px-8 text-base font-medium text-white hover:bg-gray-800">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="mt-16">
+            <h2 class="text-2xl font-serif font-bold mb-8">Customer Reviews</h2>
+            
+            <!-- Review Form (only shown to verified buyers) -->
+            <div id="review-form" class="mb-8 p-6 bg-white rounded-lg shadow hidden">
+                <h3 class="text-lg font-bold mb-4">Write a Review</h3>
+                <form onsubmit="submitReview(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Rating</label>
+                        <div class="flex space-x-2 text-2xl">
+                            <i class="far fa-star cursor-pointer" data-rating="1"></i>
+                            <i class="far fa-star cursor-pointer" data-rating="2"></i>
+                            <i class="far fa-star cursor-pointer" data-rating="3"></i>
+                            <i class="far fa-star cursor-pointer" data-rating="4"></i>
+                            <i class="far fa-star cursor-pointer" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Your Review</label>
+                        <textarea rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Add Photos/Videos</label>
+                        <input type="file" multiple accept="image/*,video/*" class="mt-1 block w-full">
+                    </div>
+                    <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+                        Submit Review
+                    </button>
+                </form>
+            </div>
+
+            <!-- Reviews List -->
+            <div id="reviews-container" class="space-y-8">
+                <!-- Reviews will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (same as other pages) -->
+    <footer class="bg-gray-900">
+        <!-- ... footer content ... -->
+    </footer>
+
+    <script src="/js/product-detail.js"></script>
+</body>
+</html> 

@@ -1,0 +1,24 @@
+/* Base logo styles */
+.logo {
+    width: 150px; /* Desktop default */
+    height: auto;
+    font-family: 'Your-Font-Name', sans-serif; /* Replace with your actual font */
+    font-weight: 400; /* Adjust as needed */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-display: swap;
+}
+
+/* Tablet screens */
+@media screen and (max-width: 768px) {
+    .logo {
+        width: 120px;
+    }
+}
+
+/* Mobile screens */
+@media screen and (max-width: 480px) {
+    .logo {
+        width: 100px;
+    }
+} 

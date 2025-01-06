@@ -28,9 +28,13 @@ function displayProducts(products) {
             ''                      // Third image - no adjustment
         ];
 
+        // Special handling for the first featured product
+        const productLink = index === 0 ? '/products/featured-1.html' : `/product-detail.html?id=${product.id}`;
+        
         return `
         <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 
-             ${glowStyles[index]} max-w-xs mx-auto">
+             ${glowStyles[index]} max-w-xs mx-auto cursor-pointer"
+             onclick="window.location.href='${productLink}'">
             <div class="h-[300px] overflow-hidden">
                 <img src="${product.image_url}" 
                     alt="${product.name}" 
@@ -55,8 +59,9 @@ function displayProducts(products) {
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-bold">₹${product.price.toLocaleString('en-IN')}</span>
                     <div class="space-x-1">
-                        <button onclick="addToWishlist(${product.id})" 
-                            class="p-1.5 text-gray-600 hover:text-red-500 transition duration-300">
+                        <button onclick="handleWishlistClick(event)" 
+                            class="p-1.5 text-gray-600 hover:text-red-500 transition duration-300"
+                            data-product-id="${product.id}">
                             <i class="fas fa-heart"></i>
                         </button>
                         <button onclick="addToCart(${product.id})" 
@@ -100,4 +105,63 @@ async function addToCart(productId) {
     } catch (error) {
         console.error('Error adding to cart:', error);
     }
-} 
+}
+
+function handleWishlistClick(event) {
+    event.preventDefault();
+    
+    // Check if user is logged in (you'll need to implement this check based on your auth system)
+    const isLoggedIn = false; // Replace with actual login check
+    
+    if (!isLoggedIn) {
+        // Redirect to login page if not logged in
+        window.location.href = '/login.html';
+        return;
+    }
+    
+    // If logged in, handle adding to wishlist
+    const productId = event.currentTarget.dataset.productId;
+    // Add your wishlist logic here
+}
+
+// When creating product cards, modify the wishlist button to use this handler
+function createProductCard(product) {
+    return `
+        <div class="bg-white rounded-lg shadow-md p-4">
+            <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover mb-4">
+            <h3 class="text-lg font-bold">${product.name}</h3>
+            <p class="text-gray-600">${product.price}</p>
+            <div class="mt-4 flex justify-between items-center">
+                <button class="text-gray-500 hover:text-red-500 wishlist-btn" 
+                        onclick="handleWishlistClick(event)" 
+                        data-product-id="${product.id}">
+                    <i class="far fa-heart"></i>
+                </button>
+                <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// Add this function to check login status and update navigation
+function updateNavigation() {
+    const isLoggedIn = false; // Replace with actual login check
+    const navItems = document.querySelector('.flex.items-center.space-x-4');
+    
+    if (isLoggedIn) {
+        // Add wishlist button if logged in
+        const wishlistLink = document.createElement('a');
+        wishlistLink.href = '/wishlist.html';
+        wishlistLink.className = 'text-gray-700 hover:text-black';
+        wishlistLink.innerHTML = `
+            <i class="fas fa-heart"></i>
+            <span class="ml-1">Wishlist</span>
+        `;
+        navItems.insertBefore(wishlistLink, navItems.lastElementChild);
+    }
+}
+
+// Call this when the page loads
+document.addEventListener('DOMContentLoaded', updateNavigation); 
