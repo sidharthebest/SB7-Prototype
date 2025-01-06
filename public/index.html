@@ -6,80 +6,355 @@
     <title>SB7 - Luxury Fashion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        
+        .bg-gradient-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+        }
+        
+        .hover-zoom {
+            transition: transform 12s ease;
+        }
+        
+        .hover-zoom:hover {
+            transform: scale(1.1);
+        }
+        
+        .search-input {
+            transform-origin: right;
+        }
+        
+        .search-active {
+            width: 180px;
+            opacity: 1;
+            pointer-events: all;
+            border-color: currentColor;
+        }
+        
+        .search-inactive {
+            width: 0;
+            opacity: 0;
+            pointer-events: none;
+            border-color: transparent;
+        }
+
+        .product-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .product-card:hover::after {
+            border-color: rgba(0,0,0,0.1);
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Elegant hover underline animation */
+        .hover-underline {
+            position: relative;
+        }
+        
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .hover-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Smooth page transition */
+        .page-transition {
+            animation: fadeIn 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* Elegant image reveal */
+        .image-reveal {
+            clip-path: inset(0 0 0 0);
+            animation: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes reveal {
+            from { clip-path: inset(0 100% 0 0); }
+            to { clip-path: inset(0 0 0 0); }
+        }
+
+        /* Parallax effect */
+        .parallax {
+            transform: translateZ(-1px) scale(2);
+            z-index: -1;
+        }
+
+        /* Cursor animation */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+            transition: transform 0.15s ease;
+        }
+
+        /* 3D Card Effect */
+        .card-3d-container {
+            perspective: 1000px;
+        }
+
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Text Reveal Animation */
+        .text-reveal {
+            overflow: hidden;
+        }
+
+        .text-reveal span {
+            display: inline-block;
+            transform: translateY(100%);
+            animation: revealText 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes revealText {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        /* 3D Button Effect */
+        .btn-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-3d:hover {
+            transform: translateZ(20px);
+        }
+
+        /* Magnetic Effect */
+        .magnetic {
+            transition: transform 0.3s cubic-bezier(0.21, 0.39, 0.39, 1.37);
+        }
+
+        /* Glowing Effect */
+        .glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            mix-blend-mode: soft-light;
+        }
+
+        .glow:hover::after {
+            opacity: 1;
+        }
+
+        /* Smooth Parallax */
+        .parallax-container {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .parallax-element {
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        /* Shared nav button styles */
+        .hover-underline span {
+            position: relative;
+            padding: 2px 0;
+        }
+
+        .hover-underline:hover i {
+            transform: translateX(4px);
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-white font-montserrat">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
+    <nav class="fixed w-full z-50 transition-all duration-500" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 gap-4">
+                <!-- Logo -->
                 <div class="flex-shrink-0">
                     <h1 class="text-2xl font-serif font-bold">SB7</h1>
                 </div>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-700 hover:text-black px-3 py-2">Home</a>
-                    <a href="/collections.html" class="text-gray-700 hover:text-black px-3 py-2">Collections</a>
-                    <div class="flex items-center space-x-4">
-                        <a href="/login.html" class="text-gray-700 hover:text-black">
-                            <i class="fas fa-user"></i>
-                            <span class="ml-1">Login</span>
-                        </a>
-                        <a href="#" class="text-gray-700 hover:text-black">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="ml-1">Cart</span>
-                        </a>
+
+                <!-- Desktop Navigation -->
+                <div class="flex items-center space-x-4 sm:space-x-8 lg:space-x-12 flex-1 justify-center">
+                    <div class="relative flex items-center h-full">
+                        <input type="text" 
+                               id="searchInput"
+                               placeholder="Search collections..." 
+                               class="search-input search-inactive pl-4 pr-10 py-2 text-sm border-b border-gray-300 focus:outline-none focus:border-gray-600 bg-transparent transition-all duration-300 tracking-wider max-w-[120px] sm:max-w-[180px]">
+                        <button id="searchBtn" class="hover-underline text-sm tracking-[0.2em] hover:text-gray-600 transition-colors duration-300 flex items-center gap-2 py-2">
+                            <span class="search-text relative inline-flex items-center">
+                                <span class="hidden sm:inline">SEARCH</span>
+                                <span class="sm:hidden">
+                                    <i class="fas fa-search text-xs"></i>
+                                </span>
+                                <i class="fas fa-search text-xs ml-2 transform group-hover:translate-x-1 transition-all duration-300 hidden sm:inline-block"></i>
+                            </span>
+                        </button>
                     </div>
+                    <a href="/collections.html" class="hover-underline text-sm tracking-[0.2em] hover:text-gray-600 transition-colors duration-300 py-2 flex items-center">
+                        <span class="relative inline-flex items-center">
+                            COLLECTIONS
+                            <i class="fas fa-chevron-right text-xs ml-2 transform group-hover:translate-x-1 transition-all duration-300 opacity-0 group-hover:opacity-100"></i>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4 sm:space-x-6 lg:space-x-8">
+                    <a href="/login.html" class="text-sm tracking-widest hover:text-gray-600 transition-colors duration-300">
+                        <i class="fas fa-user text-lg"></i>
+                    </a>
+                    <a href="#" class="text-sm tracking-widest hover:text-gray-600 transition-colors duration-300">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="relative bg-gray-900 h-96">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/Luxury Background.jpg');">
-            <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative h-screen overflow-hidden parallax-container">
+        <div class="absolute inset-0 parallax-element" data-speed="0.5">
+            <img src="/images/Luxury Background.jpg" alt="Luxury Fashion" 
+                 class="w-full h-full object-cover hover-zoom image-reveal">
+            <div class="absolute inset-0 bg-gradient-overlay"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-            <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">Luxury Redefined</h1>
-            <p class="mt-6 text-xl text-gray-300">Discover our exclusive collection of premium fashion.</p>
+        <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
+            <h1 class="text-reveal font-cormorant text-6xl md:text-8xl text-white mb-8 tracking-wide leading-tight" data-aos="fade-up">
+                <span>Luxury Redefined</span>
+            </h1>
+            <p class="floating text-lg md:text-xl text-white/90 max-w-2xl tracking-wider leading-relaxed mb-16 font-light" data-aos="fade-up" data-aos-delay="200">
+                Experience the epitome of luxury fashion
+            </p>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <a href="/collections.html" class="btn-3d glow group relative inline-flex items-center px-16 py-5 text-sm tracking-[0.2em]">
+                    <span class="absolute inset-0 border border-white/50 group-hover:border-white transition-colors duration-500"></span>
+                    <span class="relative text-white group-hover:text-white transition-colors duration-300">
+                        DISCOVER THE COLLECTION
+                        <svg class="ml-3 w-4 h-4 transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 scroll-indicator">
+            <div class="text-white/70 text-xs tracking-[0.2em] mb-4">SCROLL</div>
+            <i class="fas fa-chevron-down text-white/70 text-sm"></i>
         </div>
     </div>
 
-    <!-- Products Grid -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 class="text-2xl font-serif font-bold mb-8">Featured Collection</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="products-container">
+    <!-- Featured Products -->
+    <div class="max-w-7xl mx-auto px-8 py-40">
+        <div class="text-center mb-24">
+            <h2 class="font-cormorant text-5xl mb-6 tracking-wide" data-aos="fade-up">Featured Collection</h2>
+            <p class="text-gray-600 tracking-[0.2em] text-sm" data-aos="fade-up" data-aos-delay="100">CURATED PIECES FOR THE DISCERNING</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16" id="products-container">
             <!-- Products will be dynamically inserted here -->
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-400">
+    <footer class="bg-black text-white py-24">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
                 <div>
-                    <h3 class="text-2xl font-serif font-bold">SB7</h3>
-                    <p>Luxury fashion for the discerning individual.</p>
+                    <h3 class="text-2xl font-serif font-bold mb-8">SB7</h3>
+                    <p class="text-gray-400 tracking-wider text-sm font-light">Luxury fashion for the discerning individual.</p>
                 </div>
                 <div>
-                    <h4 class="text-white text-lg font-bold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="/about.html" class="hover:text-white">About Us</a></li>
-                        <li><a href="#" class="hover:text-white">Contact</a></li>
-                        <li><a href="#" class="hover:text-white">Shipping Policy</a></li>
-                        <li><a href="#" class="hover:text-white">Returns</a></li>
+                    <h4 class="text-sm font-medium mb-8 tracking-[0.2em]">QUICK LINKS</h4>
+                    <ul class="space-y-6 text-sm tracking-wider text-gray-400">
+                        <li><a href="/about.html" class="hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Shipping Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors duration-300">Returns</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white text-lg font-bold mb-4">Connect With Us</h4>
-                    <div class="flex space-x-4">
-                        <a href="https://www.instagram.com/sidharthebest7" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-instagram"></i>
+                    <h4 class="text-sm font-medium mb-8 tracking-[0.2em]">CONNECT WITH US</h4>
+                    <div class="flex space-x-8">
+                        <a href="https://www.instagram.com/sidharthebest7" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-facebook"></i>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-facebook text-xl"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-twitter"></i>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-twitter text-xl"></i>
                         </a>
                     </div>
                 </div>
@@ -88,5 +363,118 @@
     </footer>
 
     <script src="/js/main.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Enhanced navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white/95', 'backdrop-blur-sm', 'shadow-md');
+                navbar.classList.remove('text-white');
+            } else {
+                navbar.classList.remove('bg-white/95', 'backdrop-blur-sm', 'shadow-md');
+                navbar.classList.add('text-white');
+            }
+        });
+
+        // Search functionality
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchText = document.querySelector('.search-text');
+        let isSearchActive = false;
+
+        searchBtn.addEventListener('click', () => {
+            if (!isSearchActive) {
+                // Expand search
+                searchInput.classList.remove('search-inactive');
+                searchInput.classList.add('search-active');
+                searchText.classList.add('opacity-0');
+                searchInput.focus();
+                isSearchActive = true;
+            } else {
+                // Collapse search
+                searchInput.classList.remove('search-active');
+                searchInput.classList.add('search-inactive');
+                searchText.classList.remove('opacity-0');
+                searchInput.value = '';
+                isSearchActive = false;
+            }
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', (e) => {
+            if (isSearchActive && !searchBtn.contains(e.target) && !searchInput.contains(e.target)) {
+                searchInput.classList.remove('search-active');
+                searchInput.classList.add('search-inactive');
+                searchText.classList.remove('opacity-0');
+                searchInput.value = '';
+                isSearchActive = false;
+            }
+        });
+
+        // Handle enter key
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+                // Perform search
+                console.log('Searching for:', searchInput.value);
+                // Add your search logic here
+                
+                // Then collapse the search
+                searchInput.classList.remove('search-active');
+                searchInput.classList.add('search-inactive');
+                searchText.classList.remove('opacity-0');
+                searchInput.value = '';
+                isSearchActive = false;
+            }
+        });
+
+        // Custom cursor animation
+        const cursor = document.getElementById('customCursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+        });
+
+        // Add cursor grow effect on interactive elements
+        const interactiveElements = document.querySelectorAll('a, button');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform += ' scale(1.5)';
+                cursor.style.background = 'rgba(255, 255, 255, 0.3)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = cursor.style.transform.replace(' scale(1.5)', '');
+                cursor.style.background = 'rgba(255, 255, 255, 0.2)';
+            });
+        });
+
+        // Smooth scroll animation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <!-- Add custom cursor div after body tag -->
+    <div id="customCursor" class="custom-cursor hidden md:block"></div>
 </body>
 </html>
