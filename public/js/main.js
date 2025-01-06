@@ -109,6 +109,7 @@ async function addToCart(productId) {
 
 function handleWishlistClick(event) {
     event.preventDefault();
+    event.stopPropagation(); // Prevent triggering the product card click
     
     // Check if user is logged in (you'll need to implement this check based on your auth system)
     const isLoggedIn = false; // Replace with actual login check
@@ -121,7 +122,7 @@ function handleWishlistClick(event) {
     
     // If logged in, handle adding to wishlist
     const productId = event.currentTarget.dataset.productId;
-    // Add your wishlist logic here
+    addToWishlist(productId);
 }
 
 // When creating product cards, modify the wishlist button to use this handler
@@ -159,6 +160,7 @@ function updateNavigation() {
             <i class="fas fa-heart"></i>
             <span class="ml-1">Wishlist</span>
         `;
+        // Insert wishlist link before the cart link
         navItems.insertBefore(wishlistLink, navItems.lastElementChild);
     }
 }
