@@ -243,7 +243,9 @@
             <div class="flex justify-between items-center h-20 gap-4">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-serif font-bold">SB7</h1>
+                    <a href="/">
+                        <img src="/images/logo.png" alt="SB7" class="h-24 w-auto" style="filter: brightness(0) invert(var(--logo-invert, 0));">
+                    </a>
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -255,11 +257,11 @@
                                class="search-input search-inactive pl-4 pr-10 py-2 text-sm border-b border-gray-300 focus:outline-none focus:border-gray-600 bg-transparent transition-all duration-300 tracking-wider max-w-[120px] sm:max-w-[180px]">
                         <button id="searchBtn" class="hover-underline text-sm tracking-[0.2em] hover:text-gray-600 transition-colors duration-300 flex items-center gap-2 py-2">
                             <span class="search-text relative inline-flex items-center">
-                                <span class="hidden sm:inline">SEARCH</span>
+                                <span class="hidden sm:inline search-text-content">SEARCH</span>
                                 <span class="sm:hidden">
                                     <i class="fas fa-search text-xs"></i>
                                 </span>
-                                <i class="fas fa-search text-xs ml-2 transform group-hover:translate-x-1 transition-all duration-300 hidden sm:inline-block"></i>
+                                <i class="fas fa-search text-xs ml-2 transform group-hover:translate-x-1 transition-all duration-300 sm:inline-block"></i>
                             </span>
                         </button>
                     </div>
@@ -332,7 +334,7 @@
         <div class="max-w-7xl mx-auto px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
                 <div>
-                    <h3 class="text-2xl font-serif font-bold mb-8">SB7</h3>
+                    <img src="/images/logo.png" alt="SB7" class="h-24 w-auto mb-8" style="filter: brightness(0) invert(1);">
                     <p class="text-gray-400 tracking-wider text-sm font-light">Luxury fashion for the discerning individual.</p>
                 </div>
                 <div>
@@ -376,9 +378,11 @@
             if (window.scrollY > 50) {
                 navbar.classList.add('bg-white/95', 'backdrop-blur-sm', 'shadow-md');
                 navbar.classList.remove('text-white');
+                document.documentElement.style.setProperty('--logo-invert', '0');
             } else {
                 navbar.classList.remove('bg-white/95', 'backdrop-blur-sm', 'shadow-md');
                 navbar.classList.add('text-white');
+                document.documentElement.style.setProperty('--logo-invert', '1');
             }
         });
 
@@ -393,14 +397,14 @@
                 // Expand search
                 searchInput.classList.remove('search-inactive');
                 searchInput.classList.add('search-active');
-                searchText.classList.add('opacity-0');
+                document.querySelector('.search-text-content').classList.add('opacity-0');
                 searchInput.focus();
                 isSearchActive = true;
             } else {
                 // Collapse search
                 searchInput.classList.remove('search-active');
                 searchInput.classList.add('search-inactive');
-                searchText.classList.remove('opacity-0');
+                document.querySelector('.search-text-content').classList.remove('opacity-0');
                 searchInput.value = '';
                 isSearchActive = false;
             }
