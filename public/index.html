@@ -9,6 +9,14 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="/images/logo.png" as="image">
+    <link rel="preload" href="/images/Luxury Background.jpg" as="image">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" as="style">
     <style>
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
         .font-cormorant { font-family: 'Cormorant Garamond', serif; }
@@ -18,29 +26,85 @@
         }
         
         .hover-zoom {
-            transition: transform 12s ease;
+            transition: transform 8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .hover-zoom:hover {
             transform: scale(1.1);
         }
         
+        .search-container {
+            position: relative;
+            margin: 0;
+            display: flex;
+            height: 40px;
+            align-items: center;
+        }
+
         .search-input {
-            transform-origin: right;
-        }
-        
-        .search-active {
-            width: 180px;
-            opacity: 1;
-            pointer-events: all;
-            border-color: currentColor;
-        }
-        
-        .search-inactive {
             width: 0;
-            opacity: 0;
-            pointer-events: none;
-            border-color: transparent;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: currentColor;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .search-active {
+            width: 240px;
+            padding: 8px 40px 8px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-input::placeholder {
+            color: currentColor;
+            opacity: 0.6;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 0;
+            margin-top: -9px;
+        }
+
+        .search-icon:hover {
+            opacity: 1;
+        }
+
+        .search-active + .search-icon {
+            right: 12px;
+            transform: translateY(-50%);
+            margin-top: -9px;
+            opacity: 0.8;
+            stroke-width: 1.2;
+            filter: brightness(1.2);
+        }
+
+        .search-active + .search-icon:hover {
+            opacity: 1;
+            transform: translateY(-50%);
+            filter: brightness(1.4);
         }
 
         .product-card::after {
@@ -234,11 +298,27 @@
         .hover-underline:hover i {
             transform: translateX(4px);
         }
+
+        /* Use hardware acceleration for animations */
+        .search-input,
+        .search-icon,
+        .hover-zoom,
+        .card-3d,
+        .parallax-element {
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        /* Reduce repaints */
+        .fixed-gpu {
+            transform: translateZ(0);
+        }
     </style>
 </head>
 <body class="bg-white font-montserrat">
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 transition-all duration-500" id="navbar">
+    <nav class="fixed w-full z-50 transition-all duration-500 fixed-gpu" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20 gap-4">
                 <!-- Logo -->
@@ -250,27 +330,24 @@
 
                 <!-- Desktop Navigation -->
                 <div class="flex items-center space-x-4 sm:space-x-8 lg:space-x-12 flex-1 justify-center">
-                    <div class="relative flex items-center h-full">
-                        <input type="text" 
-                               id="searchInput"
-                               placeholder="Search collections..." 
-                               class="search-input search-inactive pl-4 pr-10 py-2 text-sm border-b border-gray-300 focus:outline-none focus:border-gray-600 bg-transparent transition-all duration-300 tracking-wider max-w-[120px] sm:max-w-[180px]">
-                        <button id="searchBtn" class="hover-underline text-sm tracking-[0.2em] hover:text-gray-600 transition-colors duration-300 flex items-center gap-2 py-2">
-                            <span class="search-text relative inline-flex items-center">
-                                <span class="hidden sm:inline search-text-content">SEARCH</span>
-                                <span class="sm:hidden">
-                                    <i class="fas fa-search text-xs"></i>
-                                </span>
-                                <i class="fas fa-search text-xs ml-2 transform group-hover:translate-x-1 transition-all duration-300 sm:inline-block"></i>
+                    <div class="flex items-center space-x-8">
+                        <div class="search-container group flex items-center">
+                            <input type="text" 
+                                   id="searchInput"
+                                   placeholder="Search collections..." 
+                                   class="search-input search-inactive font-light">
+                            <svg class="search-icon" id="searchBtn" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <circle cx="10.5" cy="10.5" r="6.5" stroke-linecap="round"/>
+                                <line x1="15.5" y1="15.5" x2="19.5" y2="19.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <a href="/collections.html" class="hover-underline text-sm tracking-[0.2em] hover:text-gray-600 transition-colors duration-300 py-2 flex items-center">
+                            <span class="relative inline-flex items-center">
+                                COLLECTIONS
+                                <i class="fas fa-chevron-right text-xs ml-2 transform group-hover:translate-x-1 transition-all duration-300 opacity-0 group-hover:opacity-100"></i>
                             </span>
-                        </button>
+                        </a>
                     </div>
-                    <a href="/collections.html" class="hover-underline text-sm tracking-[0.2em] hover:text-gray-600 transition-colors duration-300 py-2 flex items-center">
-                        <span class="relative inline-flex items-center">
-                            COLLECTIONS
-                            <i class="fas fa-chevron-right text-xs ml-2 transform group-hover:translate-x-1 transition-all duration-300 opacity-0 group-hover:opacity-100"></i>
-                        </span>
-                    </a>
                 </div>
 
                 <!-- User Actions -->
@@ -290,7 +367,9 @@
     <div class="relative h-screen overflow-hidden parallax-container">
         <div class="absolute inset-0 parallax-element" data-speed="0.5">
             <img src="/images/Luxury Background.jpg" alt="Luxury Fashion" 
-                 class="w-full h-full object-cover hover-zoom image-reveal">
+                 class="w-full h-full object-cover hover-zoom image-reveal"
+                 loading="eager"
+                 decoding="async">
             <div class="absolute inset-0 bg-gradient-overlay"></div>
         </div>
         <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
@@ -369,11 +448,27 @@
         AOS.init({
             duration: 1000,
             once: true,
-            offset: 100
+            offset: 100,
+            disable: 'mobile',
+            startEvent: 'DOMContentLoaded',
+            disableMutationObserver: true
         });
 
-        // Enhanced navbar scroll effect
-        window.addEventListener('scroll', function() {
+        // Debounce scroll handler
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Optimize scroll handler
+        window.addEventListener('scroll', debounce(function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
                 navbar.classList.add('bg-white/95', 'backdrop-blur-sm', 'shadow-md');
@@ -384,7 +479,7 @@
                 navbar.classList.add('text-white');
                 document.documentElement.style.setProperty('--logo-invert', '1');
             }
-        });
+        }, 10));
 
         // Search functionality
         const searchBtn = document.getElementById('searchBtn');
@@ -394,19 +489,20 @@
 
         searchBtn.addEventListener('click', () => {
             if (!isSearchActive) {
-                // Expand search
                 searchInput.classList.remove('search-inactive');
                 searchInput.classList.add('search-active');
-                document.querySelector('.search-text-content').classList.add('opacity-0');
                 searchInput.focus();
                 isSearchActive = true;
             } else {
-                // Collapse search
-                searchInput.classList.remove('search-active');
-                searchInput.classList.add('search-inactive');
-                document.querySelector('.search-text-content').classList.remove('opacity-0');
-                searchInput.value = '';
-                isSearchActive = false;
+                if (searchInput.value.trim() !== '') {
+                    // Perform search
+                    console.log('Searching for:', searchInput.value);
+                } else {
+                    searchInput.classList.remove('search-active');
+                    searchInput.classList.add('search-inactive');
+                    searchInput.value = '';
+                    isSearchActive = false;
+                }
             }
         });
 
@@ -437,11 +533,13 @@
             }
         });
 
-        // Custom cursor animation
-        const cursor = document.getElementById('customCursor');
-        
+        // Optimize cursor movement
+        let rafId;
         document.addEventListener('mousemove', (e) => {
-            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+            });
         });
 
         document.addEventListener('mouseenter', () => {
