@@ -75,7 +75,7 @@ function populateDatabase() {
             name: 'Premium Satin Royal Blue Shirt',
             price: 2999.99,
             description: 'Designed by Royal & Loyal People of India',
-            image_url: '/images/purple.JPG',
+            image_url: '/images/purple.jpg',
             category: 'Shirt',
             sizes: ['S', 'M', 'L', 'XL'],
             featured: true
@@ -84,7 +84,7 @@ function populateDatabase() {
             name: 'Designer Red Fur Jacket',
             price: 11499.99,
             description: 'Premium Italian Red Fur Jacket',
-            image_url: '/images/red.JPG',
+            image_url: '/images/red.jpg',
             category: 'Jacket',
             sizes: ['M', 'L', 'XL', 'XXL'],
             featured: true
@@ -93,7 +93,7 @@ function populateDatabase() {
             name: 'Designer Green Denim Jacket',
             price: 7499.99,
             description: 'Elegant French-designed Evening Gown',
-            image_url: '/images/green.JPG',
+            image_url: '/images/green.jpg',
             category: 'Dress',
             sizes: ['S', 'M', 'L'],
             featured: true
@@ -104,7 +104,7 @@ function populateDatabase() {
             name: 'Classic White Oxford Shirt',
             price: 2499.99,
             description: 'Premium Cotton Business Shirt',
-            image_url: '/images/white.JPG',
+            image_url: '/images/white.jpg',
             category: 'Shirt',
             sizes: ['S', 'M', 'L', 'XL'],
             featured: false
