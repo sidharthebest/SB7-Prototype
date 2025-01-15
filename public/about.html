@@ -3,31 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SB7 - About Us</title>
+    <title>About - SB7 Luxury Fashion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+
+        /* Artistic animations */
+        @keyframes paintStroke {
+            0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        }
+
+        @keyframes textFlow {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes imageReveal {
+            0% { clip-path: inset(0 100% 0 0); }
+            100% { clip-path: inset(0 0 0 0); }
+        }
+
+        .paint-stroke {
+            animation: paintStroke 1.2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        .text-flow {
+            animation: textFlow 1s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        .image-reveal {
+            animation: imageReveal 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        /* Artistic elements */
+        .artistic-border {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artistic-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid currentColor;
+            opacity: 0.3;
+            transition: all 0.6s ease;
+        }
+
+        .artistic-border:hover::before {
+            inset: 15px;
+            opacity: 1;
+        }
+
+        /* Scroll-triggered animations */
+        .scroll-trigger {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .scroll-trigger.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dynamic background */
+        .dynamic-bg {
+            background: 
+                linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(26, 26, 26, 0.55)),
+                url('/images/turqtexture.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .dynamic-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.15), transparent);
+            mix-blend-mode: overlay;
+        }
+
+        /* Enhance text visibility */
+        .hero-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Split text effect */
+        .split-text {
+            display: inline-block;
+            position: relative;
+        }
+
+        .split-text::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: transparent;
+            -webkit-text-stroke: 2px currentColor;
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .split-text:hover::after {
+            clip-path: inset(0 0 0 0);
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .team-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.6s ease;
+        }
+
+        .team-card:hover::after {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .team-info {
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .team-card:hover .team-info {
+            transform: translateY(0);
+        }
+
+        .subtle-pattern {
+            background-image: 
+                linear-gradient(45deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0;
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-white font-montserrat">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-white shadow-lg relative">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0">
                     <a href="/">
-                        <img src="/images/logo.png" alt="SB7" class="h-24 w-auto">
+                        <img src="/images/logo.png" alt="SB7" class="h-20 md:h-28 w-auto">
                     </a>
                 </div>
-                <div class="flex space-x-4">
-                    <a href="index.html" class="text-gray-700 hover:text-black px-3 py-2">Home</a>
-                    <a href="/collections.html" class="text-gray-700 hover:text-black px-3 py-2">Collections</a>
+                <div class="flex items-center space-x-4 md:space-x-8">
+                    <div class="flex space-x-4">
+                        <a href="index.html" class="text-gray-700 hover:text-black px-3 py-2">Home</a>
+                        <a href="/collections.html" class="text-gray-700 hover:text-black px-3 py-2">Collections</a>
+                    </div>
                     <div class="flex items-center space-x-4">
                         <a href="/login.html" class="text-gray-700 hover:text-black">
                             <i class="fas fa-user"></i>
-                            <span class="ml-1">Login</span>
+                            <span class="ml-1 hidden md:inline">Login</span>
                         </a>
                         <a href="#" class="text-gray-700 hover:text-black">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="ml-1">Cart</span>
+                            <span class="ml-1 hidden md:inline">Cart</span>
                         </a>
                     </div>
                 </div>
@@ -36,93 +191,137 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="relative bg-gray-900 h-72">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/hero.jpg');">
-            <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative min-h-screen overflow-hidden dynamic-bg">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute inset-0 subtle-pattern"></div>
         </div>
-        <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-            <h1 class="text-4xl font-serif font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl text-center">About SB7</h1>
+        <div class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 py-20">
+            <h1 class="font-cormorant text-5xl md:text-6xl lg:text-8xl text-white mb-8 md:mb-12 paint-stroke hero-text">
+                <span class="split-text" data-text="About">About</span>
+                <span class="split-text" data-text="SB7">SB7</span>
+            </h1>
+            <p class="text-white max-w-xl tracking-wider leading-relaxed text-flow text-sm md:text-base px-4 hero-text font-medium">
+                Where tradition meets innovation in luxury fashion
+            </p>
         </div>
     </div>
 
-    <!-- About Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-3xl font-serif font-bold mb-6">Our Story</h2>
-                <p class="text-gray-600 mb-6">
-                    Founded in 2024, SB7 emerged from a passion for combining timeless elegance with contemporary design. 
-                    Our journey began with a simple vision: to create luxury fashion that transcends trends and empowers 
-                    individuals to express their unique style.
-                </p>
-                <p class="text-gray-600 mb-6">
-                    Each piece in our collection is carefully curated and crafted with attention to detail, 
-                    ensuring the highest quality and sophistication that our discerning clientele deserves.
-                </p>
-            </div>
-            <div class="rounded-lg overflow-hidden shadow-xl">
-                <img src="/images/group.jpg" alt="Our Story" class="w-full h-full object-cover">
-            </div>
-        </div>
-
-        <!-- Values Section -->
-        <div class="mt-20">
-            <h2 class="text-3xl font-serif font-bold text-center mb-12">Our Values</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center p-6">
-                    <div class="text-4xl mb-4">
-                        <i class="fas fa-gem text-gray-800"></i>
+    <!-- Story Section -->
+    <div class="py-32">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5">
+                    <div class="lg:sticky lg:top-32 space-y-8 mb-12 lg:mb-0">
+                        <h2 class="font-cormorant text-6xl scroll-trigger">Our Story</h2>
+                        <p class="text-gray-600 leading-relaxed scroll-trigger">
+                            In the heart of contemporary fashion, SB7 emerged as a visionary brand 
+                            that dared to redefine luxury. Our journey is one of passion, innovation, 
+                            and unwavering commitment to excellence.
+                        </p>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Quality</h3>
-                    <p class="text-gray-600">
-                        We source only the finest materials and work with skilled artisans to create pieces that last.
-                    </p>
                 </div>
-                <div class="text-center p-6">
-                    <div class="text-4xl mb-4">
-                        <i class="fas fa-leaf text-gray-800"></i>
+                <div class="lg:col-span-7 space-y-24">
+                    <div class="artistic-border p-8 scroll-trigger">
+                        <img src="/images/group.jpg" alt="Our Beginning" 
+                             class="w-full aspect-[16/9] object-cover image-reveal">
+                        <div class="mt-8">
+                            <h3 class="font-cormorant text-2xl mb-4">The Beginning</h3>
+                            <p class="text-gray-600">Our story began with a vision to create fashion that transcends time.</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Sustainability</h3>
-                    <p class="text-gray-600">
-                        Our commitment to ethical fashion and sustainable practices guides every decision we make.
-                    </p>
-                </div>
-                <div class="text-center p-6">
-                    <div class="text-4xl mb-4">
-                        <i class="fas fa-heart text-gray-800"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Customer Focus</h3>
-                    <p class="text-gray-600">
-                        Your satisfaction is our priority, with personalized service at every step.
-                    </p>
+                    <!-- Add more story sections -->
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Team Section -->
-        <div class="mt-20">
-            <h2 class="text-3xl font-serif font-bold text-center mb-12">Our Team</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="mb-4 rounded-full overflow-hidden w-48 h-48 mx-auto">
-                        <img src="/images/thinking.jpg" alt="Team Member" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold">Sidharth Kumar</h3>
-                    <p class="text-gray-600">Creative Director</p>
+    <!-- Values Section -->
+    <div class="py-32 bg-black text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-8">
+            <h2 class="font-cormorant text-6xl text-center mb-24 scroll-trigger">Our Values</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
+                <div class="group artistic-border p-12 scroll-trigger">
+                    <div class="text-5xl mb-8 opacity-60 group-hover:opacity-100 transition-opacity duration-300">✨</div>
+                    <h3 class="font-cormorant text-3xl mb-6">Excellence</h3>
+                    <p class="text-white/70 leading-relaxed">
+                        We pursue perfection in every detail, from concept to creation.
+                    </p>
                 </div>
-                <div class="text-center">
-                    <div class="mb-4 rounded-full overflow-hidden w-48 h-48 mx-auto">
-                        <img src="/images/icecream.jpg" alt="Team Member" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="text-xl font-bold">Sidharth Kumar</h3>
-                    <p class="text-gray-600">Head of Design</p>
+                <div class="group artistic-border p-12 scroll-trigger">
+                    <div class="text-5xl mb-8 opacity-60 group-hover:opacity-100 transition-opacity duration-300">🌿</div>
+                    <h3 class="font-cormorant text-3xl mb-6">Sustainability</h3>
+                    <p class="text-white/70 leading-relaxed">
+                        Our commitment to the planet is woven into every piece we create.
+                    </p>
                 </div>
-                <div class="text-center">
-                    <div class="mb-4 rounded-full overflow-hidden w-48 h-48 mx-auto">
-                        <img src="/images/hoodie.jpg" alt="Team Member" class="w-full h-full object-cover">
+                <div class="group artistic-border p-12 scroll-trigger">
+                    <div class="text-5xl mb-8 opacity-60 group-hover:opacity-100 transition-opacity duration-300">💫</div>
+                    <h3 class="font-cormorant text-3xl mb-6">Innovation</h3>
+                    <p class="text-white/70 leading-relaxed">
+                        We blend traditional craftsmanship with modern innovation.
+                    </p>
+                </div>
+                <div class="group artistic-border p-12 scroll-trigger">
+                    <div class="text-5xl mb-8 opacity-60 group-hover:opacity-100 transition-opacity duration-300">🎯</div>
+                    <h3 class="font-cormorant text-3xl mb-6">Authenticity</h3>
+                    <p class="text-white/70 leading-relaxed">
+                        True to our vision, genuine in our approach to luxury fashion.
+                    </p>
+                </div>
+                <div class="group artistic-border p-12 scroll-trigger">
+                    <div class="text-5xl mb-8 opacity-60 group-hover:opacity-100 transition-opacity duration-300">🤝</div>
+                    <h3 class="font-cormorant text-3xl mb-6">Community</h3>
+                    <p class="text-white/70 leading-relaxed">
+                        Building lasting relationships with our clients and partners.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section with Creative Layout -->
+    <div class="py-32 bg-black text-white">
+        <div class="max-w-7xl mx-auto px-8">
+            <h2 class="font-cormorant text-5xl mb-24 scroll-trigger">The Visionaries</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                <!-- First team member -->
+                <div class="scroll-trigger" style="transition-delay: 0.2s;">
+                    <div class="team-card">
+                        <img src="/images/thinking.jpg" alt="Sidharth Kumar" 
+                             class="w-full aspect-[3/4] object-cover">
+                        <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
+                            <div class="team-info">
+                                <p class="text-xs tracking-[0.2em] text-white/70 mb-2">CREATIVE DIRECTOR</p>
+                                <h3 class="font-cormorant text-2xl">Sidharth Kumar</h3>
+                            </div>    
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold">Sidharth Kumar</h3>
-                    <p class="text-gray-600">Brand Director</p>
+                </div>
+                <!-- Second team member -->
+                <div class="scroll-trigger" style="transition-delay: 0.4s;">
+                    <div class="team-card">
+                        <img src="/images/icecream.jpg" alt="Sidharth Kumar" 
+                             class="w-full aspect-[3/4] object-cover">
+                        <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
+                            <div class="team-info">
+                                <p class="text-xs tracking-[0.2em] text-white/70 mb-2">HEAD OF DESIGN</p>
+                                <h3 class="font-cormorant text-2xl">Sidharth Kumar</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Third team member -->
+                <div class="scroll-trigger" style="transition-delay: 0.6s;">
+                    <div class="team-card">
+                        <img src="/images/hoodie.jpg" alt="Sidharth Kumar" 
+                             class="w-full aspect-[3/4] object-cover">
+                        <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
+                            <div class="team-info">
+                                <p class="text-xs tracking-[0.2em] text-white/70 mb-2">BRAND DIRECTOR</p>
+                                <h3 class="font-cormorant text-2xl">Sidharth Kumar</h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,7 +332,7 @@
         <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-400">
                 <div>
-                    <h3 class="text-2xl font-serif font-bold">SB7</h3>
+                    <img src="/images/logo.png" alt="SB7" class="h-20 w-auto mb-4 brightness-0 invert">
                     <p>Luxury fashion for the discerning individual.</p>
                 </div>
                 <div>
@@ -162,5 +361,23 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-trigger').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html> 

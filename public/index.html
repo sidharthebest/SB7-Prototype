@@ -152,30 +152,9 @@
             transform-origin: left;
         }
 
-        /* Smooth page transition */
-        .page-transition {
-            animation: fadeIn 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        /* Elegant image reveal */
-        .image-reveal {
-            clip-path: inset(0 0 0 0);
-            animation: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-
         /* Smooth scroll behavior */
         html {
             scroll-behavior: smooth;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes reveal {
-            from { clip-path: inset(0 100% 0 0); }
-            to { clip-path: inset(0 0 0 0); }
         }
 
         /* Parallax effect */
@@ -314,9 +293,136 @@
         .fixed-gpu {
             transform: translateZ(0);
         }
+
+        /* Elegant image reveal */
+        .image-reveal {
+            clip-path: inset(0 0 0 0);
+        }
+
+        /* Luxury entrance animations */
+        @keyframes luxuryReveal {
+            0% { transform: scaleY(1); }
+            50% { transform: scaleY(0); }
+            100% { transform: scaleY(0); }
+        }
+
+        @keyframes contentFade {
+            from { 
+                opacity: 0;
+                filter: blur(10px);
+                transform: scale(1.1);
+            }
+            to { 
+                opacity: 1;
+                filter: blur(0);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes borderReveal {
+            from { width: 0; opacity: 0; }
+            to { width: 100%; opacity: 1; }
+        }
+
+        /* Luxury overlay */
+        .luxury-overlay {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 100;
+            transform-origin: top;
+            animation: luxuryReveal 2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        .luxury-overlay-bottom {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 100;
+            transform-origin: bottom;
+            animation: luxuryReveal 2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        /* Elegant content animations */
+        .content-reveal {
+            opacity: 0;
+            animation: contentFade 1.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 1s; }
+        .delay-2 { animation-delay: 1.3s; }
+        .delay-3 { animation-delay: 1.6s; }
+
+        /* Decorative line animations */
+        .line-decoration {
+            position: relative;
+            display: inline-block;
+        }
+
+        .line-decoration::before,
+        .line-decoration::after {
+            content: '';
+            position: absolute;
+            height: 1px;
+            background: currentColor;
+            opacity: 0;
+            animation: borderReveal 0.8s cubic-bezier(0.7, 0, 0.3, 1) 2s forwards;
+        }
+
+        .line-decoration::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .line-decoration::after {
+            bottom: -10px;
+            right: 0;
+        }
+
+        /* Text split and reveal animation */
+        @keyframes splitReveal {
+            0% { 
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 4px rgba(255,255,255,0); }
+            50% { text-shadow: 0 0 12px rgba(0,0,0,0.2); }
+        }
+
+        .split-text-reveal {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .split-text-reveal span {
+            display: inline-block;
+            animation: splitReveal 1.2s cubic-bezier(0.7, 0, 0.3, 1) forwards,
+                       glowPulse 3s ease-in-out infinite;
+        }
+
+        .char-delay-1 { animation-delay: 0.1s; }
+        .char-delay-2 { animation-delay: 0.15s; }
+        .char-delay-3 { animation-delay: 0.2s; }
+        .char-delay-4 { animation-delay: 0.25s; }
+        .char-delay-5 { animation-delay: 0.3s; }
+        .char-delay-6 { animation-delay: 0.35s; }
+        .char-delay-7 { animation-delay: 0.4s; }
+        .char-delay-8 { animation-delay: 0.45s; }
     </style>
 </head>
 <body class="bg-white font-montserrat">
+    <!-- Luxury Reveal Animation -->
+    <div class="luxury-overlay"></div>
+    <div class="luxury-overlay-bottom"></div>
+
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-500 fixed-gpu" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -365,7 +471,7 @@
 
     <!-- Hero Section -->
     <div class="relative h-screen overflow-hidden parallax-container">
-        <div class="absolute inset-0 parallax-element" data-speed="0.5">
+        <div class="absolute inset-0 parallax-element content-reveal" data-speed="0.5">
             <img src="/images/Luxury Background.jpg" alt="Luxury Fashion" 
                  class="w-full h-full object-cover hover-zoom image-reveal"
                  loading="eager"
@@ -373,13 +479,15 @@
             <div class="absolute inset-0 bg-gradient-overlay"></div>
         </div>
         <div class="relative h-full flex flex-col justify-center items-center text-center px-4">
-            <h1 class="text-reveal font-cormorant text-6xl md:text-8xl text-white mb-8 tracking-wide leading-tight" data-aos="fade-up">
-                <span>Luxury Redefined</span>
+            <h1 class="text-reveal font-cormorant text-6xl md:text-8xl text-white mb-8 tracking-wide leading-tight content-reveal delay-1">
+                <div class="line-decoration">
+                    <span>Luxury Redefined</span>
+                </div>
             </h1>
-            <p class="floating text-lg md:text-xl text-white/90 max-w-2xl tracking-wider leading-relaxed mb-16 font-light" data-aos="fade-up" data-aos-delay="200">
+            <p class="text-lg md:text-xl text-white/90 max-w-2xl tracking-wider leading-relaxed mb-16 font-light content-reveal delay-2">
                 Experience the epitome of luxury fashion
             </p>
-            <div data-aos="fade-up" data-aos-delay="400">
+            <div class="content-reveal delay-3">
                 <a href="/collections.html" class="btn-3d glow group relative inline-flex items-center px-16 py-5 text-sm tracking-[0.2em]">
                     <span class="absolute inset-0 border border-white/50 group-hover:border-white transition-colors duration-500"></span>
                     <span class="relative text-white group-hover:text-white transition-colors duration-300">
@@ -400,7 +508,30 @@
     <!-- Featured Products -->
     <div class="max-w-7xl mx-auto px-8 py-40">
         <div class="text-center mb-24">
-            <h2 class="font-cormorant text-5xl mb-6 tracking-wide" data-aos="fade-up">Featured Collection</h2>
+            <h2 class="font-cormorant text-5xl mb-6 tracking-wide line-decoration">
+                <div class="split-text-reveal">
+                    <span class="char-delay-1">F</span>
+                    <span class="char-delay-2">e</span>
+                    <span class="char-delay-3">a</span>
+                    <span class="char-delay-4">t</span>
+                    <span class="char-delay-5">u</span>
+                    <span class="char-delay-6">r</span>
+                    <span class="char-delay-7">e</span>
+                    <span class="char-delay-8">d</span>
+                </div>
+                <div class="split-text-reveal" style="animation-delay: 0.3s;">
+                    <span class="char-delay-1">C</span>
+                    <span class="char-delay-2">o</span>
+                    <span class="char-delay-3">l</span>
+                    <span class="char-delay-4">l</span>
+                    <span class="char-delay-5">e</span>
+                    <span class="char-delay-6">c</span>
+                    <span class="char-delay-7">t</span>
+                    <span class="char-delay-8">i</span>
+                    <span class="char-delay-8">o</span>
+                    <span class="char-delay-8">n</span>
+                </div>
+            </h2>
             <p class="text-gray-600 tracking-[0.2em] text-sm" data-aos="fade-up" data-aos-delay="100">CURATED PIECES FOR THE DISCERNING</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16" id="products-container">
@@ -572,6 +703,25 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
+            });
+        });
+
+        // Create an Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.split-text-reveal span').forEach(span => {
+                        span.style.animationPlayState = 'running';
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Observe the Featured Collection heading
+        document.querySelectorAll('.split-text-reveal').forEach(el => {
+            observer.observe(el.parentElement);
+            el.querySelectorAll('span').forEach(span => {
+                span.style.animationPlayState = 'paused';
             });
         });
     </script>
